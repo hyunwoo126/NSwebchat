@@ -1,0 +1,10 @@
+#visual studio code
+.vscode/
+
+#nativescript
+hooks/
+lib/
+node_modules/
+platforms/
+tmp/
+typings/
