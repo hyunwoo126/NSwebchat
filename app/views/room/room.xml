@@ -1,0 +1,26 @@
+<Page loaded="loaded" class="page">
+    <Page.actionBar>
+        <ActionBar title="聊天室">
+            <ActionItem text="{{inputUser}}" tap="changeUser" ios.position="right" />
+        </ActionBar>
+    </Page.actionBar>
+    <GridLayout rows="*, auto">
+    <!--<DockLayout stretchLastChild="false">-->
+        <ListView items="{{ messagesList }}" id="messagesList" row="0">
+        <!--<ListView items="{{ messagesList }}" id="messagesList" dock="top">-->
+            <ListView.itemTemplate>
+                <GridLayout columns="50, auto, *">
+                    <Label col="0" text="{{ name }}"/>
+                    <Label col="1" text=" : "/>
+                    <Label col="2" text="{{ msg }}"/>
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+        <GridLayout row="1" columns="*, auto">
+         <!--<GridLayout class="sender" columns="*, auto">-->
+            <TextField id="msg" text="{{ inputMsg }}" hint="Enter message here." row="0" col="0" returnKeyType="send" returnPress="send"/>
+            <Button text="Send" tap="send" row="0" col="1" />
+        </GridLayout>
+    <!--</DockLayout>-->
+    </GridLayout>
+</Page>

@@ -1,0 +1,13 @@
+Label{
+    border-bottom: 2px solid black;
+}
+
+.sender{
+    height: 50;
+    border-width: 1;
+    border-color: blue;
+}
+
+ActionBar{
+    background-color: #FBA026;
+}
