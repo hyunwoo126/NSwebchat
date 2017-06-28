@@ -6,7 +6,7 @@
     </Page.actionBar>
     <GridLayout rows="*, auto">
     <!--<DockLayout stretchLastChild="false">-->
-        <ListView items="{{ messagesList }}" id="messagesList" row="0">
+        <ListView id="messagesList" items="{{ messagesList }}" id="messagesList" row="0">
         <!--<ListView items="{{ messagesList }}" id="messagesList" dock="top">-->
             <ListView.itemTemplate>
                 <GridLayout columns="50, auto, *">
@@ -18,7 +18,7 @@
         </ListView>
         <GridLayout row="1" columns="*, auto">
          <!--<GridLayout class="sender" columns="*, auto">-->
-            <TextField id="msg" text="{{ inputMsg }}" hint="Enter message here." row="0" col="0" returnKeyType="send" returnPress="send"/>
+            <TextField id="msg" text="{{ inputMsg }}" hint="Enter message here." row="0" col="0" tap="tapInput" returnKeyType="send" returnPress="send"/>
             <Button text="Send" tap="send" row="0" col="1" />
         </GridLayout>
     <!--</DockLayout>-->
