@@ -1,0 +1,10 @@
+<Page loaded="loaded" actionBarHidden = "true">
+<StackLayout orientation="vertical">
+    <Label class="logo" text="WebChat" horizontalAlignment="center"/>
+    <GridLayout columns="auto, *"  verticalAlignment="center">
+        <Label text="My name is " col="0"/>
+        <TextField id="input" col="1" text="{{ inputUser }}"/>
+    </GridLayout>
+    <Button text="GO!" tap="go" horizontalAlignment="center" style="background-color: green;"/>
+</StackLayout>
+</Page>

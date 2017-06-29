@@ -5,7 +5,15 @@ purpose of the file is to pass control to the app’s first module.
 */
 require("./bundle-config");
 var application = require("application");
-application.start({ moduleName: "views/room/room" });
+var Observable = require("data/observable").fromObject;
+
+global.data = new Observable({
+    inputUser: 'NativeScript User',
+});
+
+
+//application.start({ moduleName: "views/room/room" });
+application.start({ moduleName: "views/login/login" });
 //application.start({ moduleName: "main-page" });
 
 /*

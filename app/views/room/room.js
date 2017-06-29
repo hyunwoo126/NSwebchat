@@ -9,11 +9,46 @@ var messagesList = new ObservableArray([]);
 
 var pageData = new Observable({
     messagesList: messagesList,
-    inputUser: 'sky-NS',
+    inputUser: global.data.inputUser,
     inputMsg: "",
 });
 
-var mySocket;
+
+//websocket connection (nativescript-websockets)
+var mySocket = null;
+function connectSocket(reset){
+    if(typeof reset != 'boolean'){ var reset = false; }
+
+    //force close if resetting
+    if(reset && mySocket && mySocket.close){
+        mySocket.close();
+        mySocket = null;
+    }
+
+    //connect if connection is not open
+    if(!mySocket || mySocket.readyState > 1){
+        mySocket = new WebSocket('ws://192.168.1.29:8080', [ /* "protocol","another protocol" */]);
+        mySocket.addEventListener('open', function (e){ 
+            console.log("Connection established!"); 
+        });
+        mySocket.addEventListener('message', function(e){
+            //console.log("We got a message: ", e.data); e.target.close();
+            var new_msg = JSON.parse(e.data);
+            new_msg.time = new_msg.timestamp;
+            messagesList.push(new_msg);
+            scrollToBottom(true);
+        });
+        mySocket.addEventListener('close', function(e){ 
+            console.log("The Socket was Closed:", e.code, e.reason); 
+        });
+        mySocket.addEventListener('error', function(e){
+            console.log("The socket had an error", e.error); 
+        });
+    }
+}
+
+
+
 var page;
 function loaded(args) {
     page = args.object;
@@ -26,28 +61,11 @@ function loaded(args) {
         msg.android.setFocusable(false);
         setTimeout(function () {
             msg.android.setFocusableInTouchMode(true);
-        }, 300);
+        }, 500);
     }
 
-    //websocket connection (nativescript-websockets)
-    mySocket = new WebSocket('ws://192.168.1.29:8080', [ /* "protocol","another protocol" */]);
-    mySocket.addEventListener('open', function (e){ 
-        console.log("Connection established!"); 
-    });
-    mySocket.addEventListener('message', function(e){
-         //console.log("We got a message: ", e.data); e.target.close();
-        var new_msg = JSON.parse(e.data);
-        new_msg.time = new_msg.timestamp;
-        messagesList.push(new_msg);
-        scrollToBottom(true);
-    });
-    mySocket.addEventListener('close', function(e){ 
-        console.log("The Socket was Closed:", e.code, e.reason); 
-    });
-    mySocket.addEventListener('error', function(e){
-        console.log("The socket had an error", e.error); 
-    });
-    
+    //websocket connection
+    connectSocket();   
 
     //grab data from backend and add to pageData
     send('ini');
@@ -66,7 +84,7 @@ function scrollToBottom(animate){
 function tapInput(){
     setTimeout(function(){
         scrollToBottom(true);
-    },100);
+    },300);
 }
 exports.tapInput = tapInput;
 
@@ -74,6 +92,9 @@ function send(route){
     if(typeof route != 'string'){ var route = ''; }
     console.log('send()');
     console.log(pageData.get('inputMsg'));
+
+    //reconnect websocket if needed
+    connectSocket();
 
     var body = {};
     if(route == 'ini'){

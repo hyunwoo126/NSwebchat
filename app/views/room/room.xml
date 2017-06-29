@@ -1,4 +1,4 @@
-<Page loaded="loaded" class="page">
+<Page loaded="loaded">
     <Page.actionBar>
         <ActionBar title="聊天室">
             <ActionItem text="{{inputUser}}" tap="changeUser" ios.position="right" />

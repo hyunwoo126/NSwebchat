@@ -1,0 +1,17 @@
+StackLayout{
+    margin-top: 80;
+}
+
+GridLayout TextField,
+GridLayout Label{
+    font-size: 20;
+    vertical-align: center;
+}
+.logo{
+    font-size: 40;
+    padding: 20;
+}
+
+Button{
+    padding: 10 100;
+}
